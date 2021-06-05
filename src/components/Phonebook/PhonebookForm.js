@@ -1,12 +1,13 @@
 import React from "react";
 
-const PhonebookForm = () => {
+const PhonebookForm = ({ onAddContact, onChangeNumber, onChangeName }) => {
   return (
     <div>
-      <form action="">
+      <form action="" action="submit" onSubmit={onAddContact}>
         <label htmlFor="">
           <p>enter name</p>
           <input
+            onInput={(e) => onChangeName(e.target.value)}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -14,15 +15,18 @@ const PhonebookForm = () => {
             required
           />
         </label>
-        <label><p>enter phone number</p>
+        <label>
+          <p>enter phone number</p>
           <input
+            onInput={(e) => onChangeNumber(e.target.value)}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             required
           />
-        </label><br/>
+        </label>
+        <br />
         <button>Add Contact</button>
       </form>
     </div>

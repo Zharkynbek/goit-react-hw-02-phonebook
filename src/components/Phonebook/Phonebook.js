@@ -8,30 +8,48 @@ class Phonebook extends Component {
     name: "",
     number: "",
     contacts: [],
-    };
-    
-    handleAddContact = e => {
-        e.preventDefault()
-        const { name, number } = this.state;
-        this.setState((prev) => ({
-            contacts: [...prev.contacts, {name, number, id: shortid.generate()}]
-        }))
-    }
+  };
+  // ============== this methode do nothing
+  reset = () => {
+    this.setState({ name: "", number: "" });
+  };
+  // =========================================
+  
+  handleAddContact = (e) => {
+    e.preventDefault();
+    this.reset();
+    const { name, number } = this.state;
+    this.setState((prev) => ({
+      contacts: [...prev.contacts, { name, number, id: shortid.generate() }],
+    }));
+  };
 
-    handleChangeName = name => {
-        this.setState({name})
-    }
+  deleteContacts = (contactIt) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter(
+        (contact) => contact.id !== contactIt
+      ),
+    }));
+  };
 
-    handleChangeNumber = number => {
-        this.setState({number})
-    }
+  handleChangeName = (name) => {
+    this.setState({ name });
+  };
+
+  handleChangeNumber = (number) => {
+    this.setState({ number });
+  };
 
   render() {
     return (
       <div>
         <h1>Phonebook</h1>
-        <PhonebookForm />
-        <PhonebookList contacts={ this.state.contacts}/>
+        <PhonebookForm
+          onAddContact={this.handleAddContact}
+          onChangeNumber={this.handleChangeNumber}
+          onChangeName={this.handleChangeName}
+        />
+        <PhonebookList onDeleteContacts={this.deleteContacts} contacts={this.state.contacts} />
       </div>
     );
   }
