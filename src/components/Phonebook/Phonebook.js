@@ -9,19 +9,18 @@ class Phonebook extends Component {
     number: "",
     contacts: [],
   };
-  // ============== this methode do nothing
-  reset = () => {
-    this.setState({ name: "", number: "" });
-  };
-  // =========================================
-  
+
   handleAddContact = (e) => {
     e.preventDefault();
-    this.reset();
     const { name, number } = this.state;
     this.setState((prev) => ({
       contacts: [...prev.contacts, { name, number, id: shortid.generate() }],
     }));
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({ name: "", number: "" });
   };
 
   deleteContacts = (contactIt) => {
@@ -49,7 +48,10 @@ class Phonebook extends Component {
           onChangeNumber={this.handleChangeNumber}
           onChangeName={this.handleChangeName}
         />
-        <PhonebookList onDeleteContacts={this.deleteContacts} contacts={this.state.contacts} />
+        <PhonebookList
+          onDeleteContacts={this.deleteContacts}
+          contacts={this.state.contacts}
+        />
       </div>
     );
   }

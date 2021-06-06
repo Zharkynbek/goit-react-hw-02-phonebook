@@ -28,6 +28,7 @@ const PhonebookForm = ({ onAddContact, onChangeNumber, onChangeName }) => {
         </label>
         <br />
         <button>Add Contact</button>
+        <h3>Contacts</h3>
       </form>
     </div>
   );
