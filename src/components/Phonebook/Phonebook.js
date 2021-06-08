@@ -2,11 +2,15 @@ import React, {Component} from "react"
 import shortid from "shortid";
 import PhonebookForm from "./PhonebookForm";
 import PhonebookList from "./PhonebookList"
+import filterContacts from "../../helpers/filterContacts"
+import PhonebookFilter from "./PhonebookFilter"
+
 
 class Phonebook extends Component {
   state = {
     name: "",
     number: "",
+    filter: "",
     contacts: [],
   };
 
@@ -39,7 +43,12 @@ class Phonebook extends Component {
     this.setState({ number });
   };
 
+  handleChangeFilter = ({target: {name, value}}) => {
+    this.setState({[name]:value})
+  }
+
   render() {
+    const filteredContacts = filterContacts(this.state.contacts, this.state.filter)
     return (
       <div>
         <h1>Phonebook</h1>
@@ -47,10 +56,16 @@ class Phonebook extends Component {
           onAddContact={this.handleAddContact}
           onChangeNumber={this.handleChangeNumber}
           onChangeName={this.handleChangeName}
+          name={this.state.name}
+          number={this.state.number}
+        />
+        <PhonebookFilter
+          filterName={this.state.filter}
+          onChangeFilter={this.handleChangeFilter}
         />
         <PhonebookList
           onDeleteContacts={this.deleteContacts}
-          contacts={this.state.contacts}
+          contacts={filteredContacts}
         />
       </div>
     );
