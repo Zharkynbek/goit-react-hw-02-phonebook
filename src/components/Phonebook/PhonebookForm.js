@@ -31,7 +31,6 @@ const PhonebookForm = ({ onAddContact, onChangeNumber, onChangeName, name, numbe
         </label>
         <br />
         <button>Add Contact</button>
-        <h3>Contacts</h3>
       </form>
     </div>
   );

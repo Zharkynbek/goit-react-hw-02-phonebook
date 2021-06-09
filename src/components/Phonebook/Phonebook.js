@@ -14,6 +14,7 @@ class Phonebook extends Component {
     contacts: [],
   };
 
+
   handleAddContact = (e) => {
     e.preventDefault();
     const { name, number } = this.state;
@@ -43,12 +44,15 @@ class Phonebook extends Component {
     this.setState({ number });
   };
 
-  handleChangeFilter = ({target: {name, value}}) => {
-    this.setState({[name]:value})
-  }
+  handleChangeFilter = ({ target: { name, value } }) => {
+    this.setState({ [name]: value });
+  };
 
   render() {
-    const filteredContacts = filterContacts(this.state.contacts, this.state.filter)
+    const filteredContacts = filterContacts(
+      this.state.contacts,
+      this.state.filter
+    );
     return (
       <div>
         <h1>Phonebook</h1>

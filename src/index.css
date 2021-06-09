@@ -21,7 +21,8 @@ h1, h2, h3, h4 {
 
 p {
   font-family:Georgia, 'Times New Roman', Times, serif;
-  font-size: larger
+  font-size: larger;
+  text-align: center;
 }
 
 form {
@@ -41,4 +42,9 @@ button {
 ul {
   list-style: none;
   text-align: center;
+}
+
+.PhonebookFilter {
+  display: flex;
+  justify-content: center;
 }

@@ -3,9 +3,10 @@ import React from "react"
 
 const PhonebookFilter = ({ filterName, onChangeFilter }) => {
   return (
-    <div>
+    <>
+    <div class="PhonebookFilter">
       <label>
-        <p>Filter contacts</p>
+        <p>filter contacts</p>
         <input
           type="text"
           name="filter"
@@ -15,6 +16,8 @@ const PhonebookFilter = ({ filterName, onChangeFilter }) => {
         />
       </label>
     </div>
+    <h3>Contacts</h3>
+    </>
   );
 };
 
