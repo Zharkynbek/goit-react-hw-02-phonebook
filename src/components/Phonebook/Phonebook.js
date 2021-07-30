@@ -1,79 +1,67 @@
-import React, {Component} from "react"
+import React, { useState } from "react";
 import shortid from "shortid";
 import PhonebookForm from "./PhonebookForm";
-import PhonebookList from "./PhonebookList"
-import filterContacts from "../../helpers/filterContacts"
-import PhonebookFilter from "./PhonebookFilter"
+import PhonebookList from "./PhonebookList";
+import filterContacts from "../../helpers/filterContacts";
+import PhonebookFilter from "./PhonebookFilter";
 
+export default function Phonebook() {
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  const [filter, setFilter] = useState("");
+  const [contacts, setContacts] = useState([]);
 
-class Phonebook extends Component {
-  state = {
-    name: "",
-    number: "",
-    filter: "",
-    contacts: [],
-  };
-
-
-  handleAddContact = (e) => {
+  const handleAddContact = (e) => {
     e.preventDefault();
-    const { name, number } = this.state;
-    this.setState((prev) => ({
-      contacts: [...prev.contacts, { name, number, id: shortid.generate() }],
-    }));
-    this.reset();
+    setContacts((prev) => [
+      ...prev.contacts,
+      { name, number, id: shortid.generate() },
+    ]);
+    reset();
   };
 
-  reset = () => {
-    this.setState({ name: "", number: "" });
+  const reset = () => {
+    setName("");
+    setNumber("");
   };
 
-  deleteContacts = (contactIt) => {
-    this.setState((prevState) => ({
-      contacts: prevState.contacts.filter(
-        (contact) => contact.id !== contactIt
-      ),
-    }));
-  };
-
-  handleChangeName = (name) => {
-    this.setState({ name });
-  };
-
-  handleChangeNumber = (number) => {
-    this.setState({ number });
-  };
-
-  handleChangeFilter = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
-  };
-
-  render() {
-    const filteredContacts = filterContacts(
-      this.state.contacts,
-      this.state.filter
+  const deleteContacts = (contactIt) => {
+    setContacts((prevState) =>
+      prevState.filter((contact) => contact.id !== contactIt)
     );
-    return (
-      <div>
-        <h1>Phonebook</h1>
-        <PhonebookForm
-          onAddContact={this.handleAddContact}
-          onChangeNumber={this.handleChangeNumber}
-          onChangeName={this.handleChangeName}
-          name={this.state.name}
-          number={this.state.number}
-        />
-        <PhonebookFilter
-          filterName={this.state.filter}
-          onChangeFilter={this.handleChangeFilter}
-        />
-        <PhonebookList
-          onDeleteContacts={this.deleteContacts}
-          contacts={filteredContacts}
-        />
-      </div>
-    );
-  }
+  };
+
+  const handleChangeName = (name) => {
+    setName(name);
+  };
+
+  const handleChangeNumber = (number) => {
+    setNumber(number);
+  };
+
+  const handleChangeFilter = ({ target: { value } }) => {
+    setFilter(value);
+  };
+
+  const filteredContacts = filterContacts(contacts, filter);
+  return (
+    <div>
+      <h1>Phonebook</h1>
+      <PhonebookForm
+        onAddContact={handleAddContact}
+        onChangeNumber={handleChangeNumber}
+        onChangeName={handleChangeName}
+        name={name}
+        number={number}
+      />
+      <PhonebookFilter
+        filterName={filter}
+        onChangeFilter={handleChangeFilter}
+      />
+      <PhonebookList
+        onDeleteContacts={deleteContacts}
+        contacts={filteredContacts}
+      />
+    </div>
+  );
 }
-
-export default Phonebook
